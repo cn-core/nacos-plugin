@@ -21,8 +21,7 @@ import com.alibaba.nacos.common.utils.StringUtils;
 import com.alibaba.nacos.plugin.datasource.constants.FieldConstant;
 import com.alibaba.nacos.plugin.datasource.constants.TableConstant;
 import com.alibaba.nacos.plugin.datasource.dialect.DatabaseDialect;
-import com.alibaba.nacos.plugin.datasource.impl.mysql.ConfigTagsRelationMapperByMySql;
-import com.alibaba.nacos.plugin.datasource.manager.DatabaseDialectManager;
+import com.alibaba.nacos.plugin.datasource.mapper.ConfigTagsRelationMapper;
 import com.alibaba.nacos.plugin.datasource.model.MapperContext;
 import com.alibaba.nacos.plugin.datasource.model.MapperResult;
 
@@ -34,23 +33,22 @@ import java.util.List;
  *
  * @author Long Yu
  **/
-public class BaseConfigTagsRelationMapper extends ConfigTagsRelationMapperByMySql {
-    
-    private DatabaseDialect databaseDialect;
-    
-    public BaseConfigTagsRelationMapper() {
-        databaseDialect = DatabaseDialectManager.getInstance().getDialect(getDataSource());
+public abstract class BaseConfigTagsRelationMapper extends BaseAbstractMapper implements ConfigTagsRelationMapper {
+
+    protected BaseConfigTagsRelationMapper(DatabaseDialect databaseDialect) {
+        super(databaseDialect);
     }
-    
+
+    @Override
     public String getLimitPageSqlWithOffset(String sql, int startOffset, int pageSize) {
         return databaseDialect.getLimitPageSqlWithOffset(sql, startOffset, pageSize);
     }
-    
+
     @Override
     public String getTableName() {
         return TableConstant.CONFIG_TAGS_RELATION;
     }
-    
+
     @Override
     public MapperResult findConfigInfo4PageFetchRows(MapperContext context) {
         final String tenant = (String) context.getWhereParameter(FieldConstant.TENANT_ID);
@@ -61,10 +59,8 @@ public class BaseConfigTagsRelationMapper extends ConfigTagsRelationMapperByMySq
         final String[] tagArr = (String[]) context.getWhereParameter(FieldConstant.TAG_ARR);
         List<Object> paramList = new ArrayList<>();
         StringBuilder where = new StringBuilder(" WHERE ");
-        final String sql =
-                "SELECT a.id,a.data_id,a.group_id,a.tenant_id,a.app_name,a.content FROM config_info  a LEFT JOIN "
-                        + "config_tags_relation b ON a.id=b.id";
-        
+        final String sql = "SELECT a.id,a.data_id,a.group_id,a.tenant_id,a.app_name,a.content FROM config_info  a LEFT JOIN " + "config_tags_relation b ON a.id=b.id";
+
         where.append(" a.tenant_id=? ");
         paramList.add(tenant);
         if (StringUtils.isNotBlank(dataId)) {
@@ -83,7 +79,7 @@ public class BaseConfigTagsRelationMapper extends ConfigTagsRelationMapperByMySq
             where.append(" AND a.content LIKE ? ");
             paramList.add(content);
         }
-        
+
         where.append(" AND b.tag_name IN (");
         for (int i = 0; i < tagArr.length; i++) {
             if (i != 0) {
@@ -98,7 +94,7 @@ public class BaseConfigTagsRelationMapper extends ConfigTagsRelationMapperByMySq
         String resultSql = getLimitPageSqlWithOffset(sql + where, startRow, pageSize);
         return new MapperResult(resultSql, paramList);
     }
-    
+
     @Override
     public MapperResult findConfigInfoLike4PageFetchRows(MapperContext context) {
         final String tenant = (String) context.getWhereParameter(FieldConstant.TENANT_ID);
@@ -109,9 +105,8 @@ public class BaseConfigTagsRelationMapper extends ConfigTagsRelationMapperByMySq
         final String[] tagArr = (String[]) context.getWhereParameter(FieldConstant.TAG_ARR);
         List<Object> paramList = new ArrayList<>();
         StringBuilder where = new StringBuilder(" WHERE ");
-        final String sqlFetchRows = "SELECT a.id,a.data_id,a.group_id,a.tenant_id,a.app_name,a.content "
-                + "FROM config_info a LEFT JOIN config_tags_relation b ON a.id=b.id ";
-        
+        final String sqlFetchRows = "SELECT a.id,a.data_id,a.group_id,a.tenant_id,a.app_name,a.content " + "FROM config_info a LEFT JOIN config_tags_relation b ON a.id=b.id ";
+
         where.append(" a.tenant_id LIKE ? ");
         paramList.add(tenant);
         if (!StringUtils.isBlank(dataId)) {
@@ -144,10 +139,4 @@ public class BaseConfigTagsRelationMapper extends ConfigTagsRelationMapperByMySq
         String sql = getLimitPageSqlWithOffset(sqlFetchRows + where, startRow, pageSize);
         return new MapperResult(sql, paramList);
     }
-
-    @Override
-    public String getFunction(String functionName) {
-        return databaseDialect.getFunction(functionName);
-    }
-    
 }

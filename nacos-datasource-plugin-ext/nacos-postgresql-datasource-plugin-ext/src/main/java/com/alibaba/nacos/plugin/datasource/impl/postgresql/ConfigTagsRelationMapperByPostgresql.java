@@ -17,6 +17,7 @@
 package com.alibaba.nacos.plugin.datasource.impl.postgresql;
 
 import com.alibaba.nacos.plugin.datasource.constants.DatabaseTypeConstant;
+import com.alibaba.nacos.plugin.datasource.dialect.PostgresqlDatabaseDialect;
 import com.alibaba.nacos.plugin.datasource.impl.base.BaseConfigTagsRelationMapper;
 
 /**
@@ -26,7 +27,12 @@ import com.alibaba.nacos.plugin.datasource.impl.base.BaseConfigTagsRelationMappe
  **/
 
 public class ConfigTagsRelationMapperByPostgresql extends BaseConfigTagsRelationMapper{
-    
+
+    public ConfigTagsRelationMapperByPostgresql()
+    {
+        super(new PostgresqlDatabaseDialect());
+    }
+
     @Override
     public String getDataSource() {
         return DatabaseTypeConstant.POSTGRESQL;

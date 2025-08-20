@@ -1,24 +1,17 @@
-/*
- * Copyright   : Sinhy Technologies Co., Ltd. Copyright 2025-2030, All right reserved.
- * @since 2025-04-28 16:05
- * @version V2.0
- */
-
 package com.alibaba.nacos.plugin.datasource.impl.postgresql;
-
 
 import com.alibaba.nacos.plugin.datasource.constants.DatabaseTypeConstant;
 import com.alibaba.nacos.plugin.datasource.dialect.PostgresqlDatabaseDialect;
-import com.alibaba.nacos.plugin.datasource.impl.base.BaseConfigInfoBetaMapper;
+import com.alibaba.nacos.plugin.datasource.impl.base.BaseConfigMigrateMapper;
 
 /**
- * The postgresql implementation of ConfigInfoBetaMapper.
+ * The type Config migrate mapper by mysql.
  *
  * @author yangzhiguo on 2025/8/20
  */
-public class ConfigInfoBetaMapperByPostgresql extends BaseConfigInfoBetaMapper {
+public class ConfigMigrateMapperByPostgresql extends BaseConfigMigrateMapper {
 
-    public ConfigInfoBetaMapperByPostgresql() {
+    public ConfigMigrateMapperByPostgresql() {
         super(new PostgresqlDatabaseDialect());
     }
 
@@ -26,5 +19,4 @@ public class ConfigInfoBetaMapperByPostgresql extends BaseConfigInfoBetaMapper {
     public String getDataSource() {
         return DatabaseTypeConstant.POSTGRESQL;
     }
-
 }

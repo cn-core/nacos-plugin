@@ -1,3 +1,5 @@
+# [Nacos3 版本适配 PG 库插件参考](https://github.com/lilinhai/nacos-datasource-plugin-ext)
+
 # Nacos数据库适配插件
 
 ## 一、插件概述

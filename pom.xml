@@ -30,22 +30,22 @@
     </organization>
 
     <modules>
-        <module>nacos-encryption-plugin-ext</module>
+        <!-- <module>nacos-encryption-plugin-ext</module> -->
         <module>nacos-trace-plugin-ext</module>
         <module>nacos-custom-environment-plugin-ext</module>
         <module>nacos-datasource-plugin-ext</module>
-        <module>nacos-config-change-plugin-ext</module>
+        <!-- <module>nacos-config-change-plugin-ext</module> -->
     </modules>
 
     <properties>
-        <revision>1.0.0-SNAPSHOT</revision>
+        <revision>3.0.2</revision>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
-        <alibaba-nacos.version>2.4.3</alibaba-nacos.version>
-        <maven-flatten-version>1.1.0</maven-flatten-version>
-        <maven-shade-plugin.version>3.2.4</maven-shade-plugin.version>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <alibaba-nacos.version>3.0.2</alibaba-nacos.version>
+        <maven-flatten-version>1.7.0</maven-flatten-version>
+        <maven-shade-plugin.version>3.6.0</maven-shade-plugin.version>
         <junit.version>4.12</junit.version>
     </properties>
 

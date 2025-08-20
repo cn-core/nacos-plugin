@@ -21,6 +21,7 @@ import com.alibaba.nacos.plugin.datasource.constants.PrimaryKeyConstant;
 /**
  * Abstract DatabaseDialect.
  * Default limit for mysql,postgresql
+ *
  * @author Long Yu
  */
 public abstract class AbstractDatabaseDialect implements DatabaseDialect {
@@ -51,7 +52,7 @@ public abstract class AbstractDatabaseDialect implements DatabaseDialect {
     }
     
     @Override
-    public String getLimitPageSqlWithOffset(String sql, int startOffset, int pageSize){
+    public String getLimitPageSqlWithOffset(String sql, int startOffset, int pageSize) {
         return sql + "  LIMIT " + startOffset + " , " + pageSize;
     }
     

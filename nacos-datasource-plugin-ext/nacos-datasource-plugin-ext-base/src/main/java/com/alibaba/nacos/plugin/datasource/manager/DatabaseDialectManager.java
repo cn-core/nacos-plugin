@@ -28,6 +28,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * DatabaseDialect SPI Manager.
+ *
  * @author Long Yu
  */
 public class DatabaseDialectManager {
